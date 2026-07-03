@@ -69,7 +69,8 @@ Threshold optimization alone improved test F1 from 0.456 → 0.486, trading a mo
 ## Repository Structure
 
 ```
-├── Bank_Marketing.ipynb   # Full analysis: EDA → pipeline → modeling → tuning → threshold optimization
+├── Bank_Marketing.ipynb   # Full analysis: EDA -> pipeline -> modeling -> tuning -> threshold optimization
+├── requirements.txt       # Python dependencies
 └── README.md
 ```
 
@@ -78,7 +79,7 @@ Threshold optimization alone improved test F1 from 0.456 → 0.486, trading a mo
 1. Download `bank-additional-full.csv` from the [UCI repository](https://archive.ics.uci.edu/dataset/222/bank+marketing) and place it next to the notebook.
 2. Install dependencies:
    ```bash
-   pip install pandas numpy scikit-learn scipy matplotlib jupyter
+   pip install -r requirements.txt
    ```
 3. Run the notebook top to bottom:
    ```bash
