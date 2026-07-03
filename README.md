@@ -69,7 +69,7 @@ Threshold optimisation alone improved test F1 from 0.456 → 0.486, trading a mo
 ## Repository Structure
 
 ```
-├── Bank_Marketing.ipynb   # Full analysis: EDA -> pipeline -> modeling -> tuning -> threshold optimisation
+├── Bank_Marketing.ipynb   # Full analysis: EDA -> pipeline -> modelling -> tuning -> threshold optimisation
 ├── requirements.txt       # Python dependencies
 └── README.md
 ```
