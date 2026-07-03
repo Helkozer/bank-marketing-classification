@@ -2,7 +2,7 @@
 
 End-to-end binary classification project predicting whether a bank client will subscribe to a term deposit, based on the [UCI Bank Marketing dataset](https://archive.ics.uci.edu/dataset/222/bank+marketing) (~41k records of a Portuguese bank's telemarketing campaigns).
 
-The focus of this project is **methodological rigor**: a fully leakage-free pipeline, honest evaluation against a baseline, and business-driven decision threshold optimization — not just chasing a single metric.
+The focus of this project is **methodological rigour**: a fully leakage-free pipeline, honest evaluation against a baseline, and business-driven decision threshold optimisation — not just chasing a single metric.
 
 ## Key Results
 
@@ -21,7 +21,7 @@ The focus of this project is **methodological rigor**: a fully leakage-free pipe
 |---|---|---|---|---|
 | **0.870** | **0.441** | **0.540** | **0.486** | **0.791** |
 
-Threshold optimization alone improved test F1 from 0.456 → 0.486, trading a moderate drop in recall for a substantial precision gain (0.359 → 0.441) — fewer wasted calls to uninterested clients.
+Threshold optimisation alone improved test F1 from 0.456 → 0.486, trading a moderate drop in recall for a substantial precision gain (0.359 → 0.441) — fewer wasted calls to uninterested clients.
 
 ## Why This Project Is Non-Trivial
 
@@ -30,13 +30,13 @@ Threshold optimization alone improved test F1 from 0.456 → 0.486, trading a mo
 - **Zero data leakage by design:**
   - All preprocessing (imputation, scaling, outlier capping, encoding) lives *inside* a scikit-learn `Pipeline` and is fitted only on training folds during cross-validation.
   - The decision threshold was selected on **out-of-fold predictions from the training set** — never on the test set. The test set was touched exactly once, at the very end.
-  - Test F1 (0.486) landing close to the threshold-selection CV F1 (0.510) confirms the model generalizes well and is not overfitted.
+  - Test F1 (0.486) landing close to the threshold-selection CV F1 (0.510) confirms the model generalises well and is not overfitted.
 
 ## Workflow
 
 ### 1. Exploratory Data Analysis
 - Uncovered hidden missing values — the dataset encodes them as the string `"unknown"` (up to 20.9% in the `default` column), invisible to `df.info()`.
-- Correlation analysis revealed strong multicollinearity among macroeconomic indicators (`emp.var.rate` ↔ `euribor3m`: r = 0.97) → redundant features dropped to stabilize the linear model.
+- Correlation analysis revealed strong multicollinearity among macroeconomic indicators (`emp.var.rate` ↔ `euribor3m`: r = 0.97) → redundant features dropped to stabilise the linear model.
 - Distribution analysis (histograms, boxplots) + outlier quantification using both **Z-score** (~7.5% of rows) and **IQR** (~20.5%) methods → decision to **cap outliers instead of removing** them, avoiding massive information loss.
 
 ### 2. Feature Engineering
@@ -57,7 +57,7 @@ Threshold optimization alone improved test F1 from 0.456 → 0.486, trading a mo
 - `GridSearchCV` (5-fold, custom F1 scorer via `make_scorer`) over `learning_rate`, `max_depth`, `max_iter` for the winning Gradient Boosting model.
 - Best configuration: `learning_rate=0.1, max_depth=5, max_iter=100`.
 
-### 6. Decision Threshold Optimization
+### 6. Decision Threshold Optimisation
 - The default 0.5 threshold is arbitrary and ignores the business context: a wasted call (FP) costs less than a missed subscriber (FN), but call-center capacity is finite.
 - Swept thresholds 0.10–0.90 on out-of-fold training predictions; optimal F1 at **0.64**.
 - Final recommendation explicitly framed as a **business trade-off**: lower thresholds if coverage of interested clients is the priority, 0.64 if reducing unnecessary contacts matters more.
@@ -69,7 +69,7 @@ Threshold optimization alone improved test F1 from 0.456 → 0.486, trading a mo
 ## Repository Structure
 
 ```
-├── Bank_Marketing.ipynb   # Full analysis: EDA -> pipeline -> modeling -> tuning -> threshold optimization
+├── Bank_Marketing.ipynb   # Full analysis: EDA -> pipeline -> modeling -> tuning -> threshold optimisation
 ├── requirements.txt       # Python dependencies
 └── README.md
 ```
