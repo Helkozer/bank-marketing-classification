@@ -26,7 +26,7 @@ Threshold optimization alone improved test F1 from 0.456 → 0.486, trading a mo
 ## Why This Project Is Non-Trivial
 
 - **Severe class imbalance (~11% positive class).** Accuracy is misleading here — the dummy baseline reaches 88.8% accuracy with zero business value (F1 = 0). All modeling decisions were driven by F1/AUC, not accuracy.
-- **Deliberate removal of the `duration` feature.** Call duration is only known *after* the call ends — using it would be target leakage.
+- **Deliberate removal of the duration feature. Call duration is only known after the call ends, using it would be target leakage. It is excluded here to reflect a realistic pre-call prediction scenario.
 - **Zero data leakage by design:**
   - All preprocessing (imputation, scaling, outlier capping, encoding) lives *inside* a scikit-learn `Pipeline` and is fitted only on training folds during cross-validation.
   - The decision threshold was selected on **out-of-fold predictions from the training set** — never on the test set. The test set was touched exactly once, at the very end.
