@@ -15,7 +15,7 @@ The focus of this project is **methodological rigour**: a fully leakage-free pip
 
 *5-fold cross-validation on the training set (positive class: "yes")*
 
-**Final model — tuned Gradient Boosting with optimized decision threshold (0.64), evaluated on the held-out test set:**
+**Final model — tuned Gradient Boosting with optimised decision threshold (0.64), evaluated on the held-out test set:**
 
 | Accuracy | Precision | Recall | F1 | AUC |
 |---|---|---|---|---|
@@ -25,7 +25,7 @@ Threshold optimisation alone improved test F1 from 0.456 → 0.486, trading a mo
 
 ## Why This Project Is Non-Trivial
 
-- **Severe class imbalance (~11% positive class).** Accuracy is misleading here — the dummy baseline reaches 88.8% accuracy with zero business value (F1 = 0). All modeling decisions were driven by F1/AUC, not accuracy.
+- **Severe class imbalance (~11% positive class).** Accuracy is misleading here — the dummy baseline reaches 88.8% accuracy with zero business value (F1 = 0). All modelling decisions were driven by F1/AUC, not accuracy.
 - **Deliberate removal** of the duration feature. Call duration is only known after the call ends, using it would be target leakage. It is excluded here to reflect a realistic pre-call prediction scenario.
 - **Zero data leakage by design:**
   - All preprocessing (imputation, scaling, outlier capping, encoding) lives *inside* a scikit-learn `Pipeline` and is fitted only on training folds during cross-validation.
@@ -47,7 +47,7 @@ Threshold optimisation alone improved test F1 from 0.456 → 0.486, trading a mo
 - **Numerical branch:** custom `OutlierCapper` transformer (own implementation of `BaseEstimator` + `TransformerMixin`, IQR-based clipping) → median `SimpleImputer` → `StandardScaler`
 - **Categorical branch:** most-frequent `SimpleImputer` → `OneHotEncoder(handle_unknown='ignore')`
 
-### 4. Modeling & Evaluation
+### 4. Modelling & Evaluation
 - Three algorithms representing distinct learning paradigms: **Logistic Regression** (interpretable linear baseline), **Random Forest** (bagging), **HistGradientBoostingClassifier** (boosting) — all with `class_weight='balanced'` to address imbalance.
 - Compared against a **DummyClassifier** baseline to prove the models learn real patterns.
 - Evaluated with 5-fold `cross_val_predict`: accuracy, precision, recall, F1, confusion matrices, ROC curves + AUC.
